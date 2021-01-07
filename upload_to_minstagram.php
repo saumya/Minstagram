@@ -133,12 +133,9 @@ $app_function = (function(){
 	} else {
 		// not a POST request
 		echo '---------------------------' . '<br />';
-		//echo 'Total Files=' . getImageFolderDetails()  . '<br />';
-		//$pdo = db_connect();
+		echo 'Total Files=' . $getImageFolderDetails()  . '<br />';
 		echo 'Not a POST request!' . '<br/>';
-		//$db_connect();
 		echo '---------------------------' . '<br />';
-
 	} // if/
 });
 // =================================================
