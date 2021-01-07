@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	
+	<title> MinstaGram </title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma-rtl.min.css">
+
+	<script defer src="js/upload.js"></script>
+	<script defer src="js/update.js"></script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="box">
+			<form method="post" enctype="multipart/form-data">
+				<input class="input is-info" type="file" name="files[]" multiple /> <br /><br />
+				<input class="button is-warning" type="submit" value="Upload File" name="submit" />
+			</form>
+		</div>
+		<div class="box">
+			<input class="input" type="text" placeholder="Tell something about the image, that has been uploaded." id="id_txt_update" /> <br/><br/>
+			<input class="button is-warning" type="button" value="Update" id="id_btn_update" />
+		</div>
+		<div class="box">
+			<button class="button is-success" id="id_btn_remake_data"> Make the new data available. </button>
+		</div>
+	</div>
+	
+	
+
+	<div id="id_result"></div>
+
+</body>
+</html>
