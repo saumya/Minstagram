@@ -29,12 +29,13 @@ $run_the_self_executing_application = (function(){
         return $total_num_rows;
     }; // $get_last_id/
     
-    $set_title_for_the_photo_with_id = function($photo_id, $photo_title){
+    $set_title_for_the_photo_with_id = function( $photo_id, $photo_title){
+        
         $data = [
             'photo_id'=>$photo_id,
             'photo_title'=>$photo_title
         ];
-        //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
         $sql = "UPDATE minstagram SET title=:photo_title WHERE id=:photo_id";
         $update_statement = $pdo->prepare( $sql );
@@ -86,20 +87,20 @@ $run_the_self_executing_application = (function(){
     // 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ( isset($_POST) ){
-            
             $initDBTable( $SQLite_file_path );
-            echo 'done';
-            /*
+
             $photo_id = ($create_file_name()-1);
             $photo_title = $get_ui_data();
+            // TODO: Fix this
             $result = $set_title_for_the_photo_with_id($photo_id, $photo_title);
             
+            echo $photo_id.'-'.$photo_title.'<br/> ';
+
             if($result==0){
                 echo 'Title Update Failed!';
             }else{
                 echo 'Title update Success.';
             }
-            */
             //
         }else{
             echo '{ "result" : "Nothing From FrontEnd" }';
