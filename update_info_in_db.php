@@ -54,6 +54,32 @@ $run_the_self_executing_application = (function(){
         $update_statement->execute($data);
         return $update_statement->rowCount();
     }; // $set_title_for_the_photo_with_id/
+
+    $createDBTable = function(){
+        try {
+            $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+            $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
+            $sql_statement = "CREATE TABLE IF NOT EXISTS minstagram (
+                                                    id INTEGER PRIMARY KEY,
+                                                    title TEXT,
+                                                    photo BLOB,
+                                                    photo_name TEXT )";
+            $pdo->exec($sql_statement);
+        } catch (PDOException $e) {
+            echo 'Exception : Create Table';
+            echo $e->getMessage();
+        }
+    };
+
+    $savePhoto = function( $f_name, $file_data_to_store){
+        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+        $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
+        $sql = "INSERT INTO minstagram(photo_name, photo)" . "VALUES(:p_name, :p_data)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':p_name', $f_name);
+        $stmt->bindParam(':p_data', $file_data_to_store, \PDO::PARAM_LOB);
+        $stmt->execute();
+    };
     
     // Database/
     //
