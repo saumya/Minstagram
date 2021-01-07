@@ -41,7 +41,7 @@ $run_the_self_executing_application = (function(){
         return $update_statement->rowCount();
     }; // $set_title_for_the_photo_with_id/
 
-    $createDBTable = function(){
+    $initDBTable = function(){
         //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         try {
             $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
@@ -83,15 +83,20 @@ $run_the_self_executing_application = (function(){
     // 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ( isset($_POST) ){
+            
+            $initDBTable();
+            echo 'done';
+            /*
             $photo_id = ($create_file_name()-1);
             $photo_title = $get_ui_data();
             $result = $set_title_for_the_photo_with_id($photo_id, $photo_title);
-            //echo $result;
+            
             if($result==0){
                 echo 'Title Update Failed!';
             }else{
                 echo 'Title update Success.';
             }
+            */
             //
         }else{
             echo '{ "result" : "Nothing From FrontEnd" }';
