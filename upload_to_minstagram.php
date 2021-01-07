@@ -119,7 +119,8 @@
 			//echo 'Total Files=' . getImageFolderDetails()  . '<br />';
 			//$pdo = db_connect();
 			//$testFunction();
-			$db_connect();
+			echo 'Not a POST request!' . '<br/>';
+			//$db_connect();
 			echo '---------------------------' . '<br />';
 
 		} // if/
