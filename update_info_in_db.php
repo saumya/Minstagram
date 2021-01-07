@@ -6,6 +6,7 @@
 
 
 $run_the_self_executing_application = (function(){
+    $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
     $get_ui_data = function(){
         // ref: https://www.php.net/manual/en/wrappers.php.php
         $str_json = file_get_contents('php://input');
@@ -16,7 +17,7 @@ $run_the_self_executing_application = (function(){
     // Database
     $get_last_id = function(){
         // ref: https://www.php.net/manual/en/pdostatement.fetch.php
-        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+        //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
         $sql = "SELECT * FROM minstagram";
         $sth = $pdo->prepare( $sql );
@@ -40,15 +41,12 @@ $run_the_self_executing_application = (function(){
     }; // $get_last_id/
     
     $set_title_for_the_photo_with_id = function($photo_id, $photo_title){
-        
         $data = [
             'photo_id'=>$photo_id,
             'photo_title'=>$photo_title
         ];
-        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+        //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
-        //$sql = "SELECT * FROM minstagram";
-        //$sql = "INSERT INTO minstagram (title) VALUES (:stringtitle)";
         $sql = "UPDATE minstagram SET title=:photo_title WHERE id=:photo_id";
         $update_statement = $pdo->prepare( $sql );
         $update_statement->execute($data);
@@ -56,8 +54,8 @@ $run_the_self_executing_application = (function(){
     }; // $set_title_for_the_photo_with_id/
 
     $createDBTable = function(){
+        //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         try {
-            $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
             $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
             $sql_statement = "CREATE TABLE IF NOT EXISTS minstagram (
                                                     id INTEGER PRIMARY KEY,
@@ -71,8 +69,8 @@ $run_the_self_executing_application = (function(){
         }
     };
 
-    $savePhoto = function( $f_name, $file_data_to_store){
-        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+    $savePhoto = function($f_name, $file_data_to_store){
+        //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
         $sql = "INSERT INTO minstagram(photo_name, photo)" . "VALUES(:p_name, :p_data)";
         $stmt = $pdo->prepare($sql);
@@ -97,21 +95,6 @@ $run_the_self_executing_application = (function(){
     // 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ( isset($_POST) ){
-            /*
-            // Data from UI, the user typed title of the image
-            echo '> From UI=' . $get_ui_data();
-            
-            // Get the files data from the folder & Make a new Name and save it in DB
-            echo '> New FileName=' . $create_file_name();
-            //
-            // Check the DB and get the last id from the table
-            // echo '> LastId=' . $get_last_id();
-            // We do not need to check the DB for the latest 'id'
-            // We can take that from the number of files
-            echo '> LastId=' . ($create_file_name()-1);
-            //
-            */
-
             $photo_id = ($create_file_name()-1);
             $photo_title = $get_ui_data();
             $result = $set_title_for_the_photo_with_id($photo_id, $photo_title);
@@ -136,26 +119,4 @@ $run_the_self_executing_application = (function(){
 $run_the_self_executing_application();
 // =================================================
 
-//
-/*
-$path = 'minstagram_uploads/';
-$extensions = ['jpg', 'jpeg', 'png', 'gif'];
-$xfiles = ['.', '..', '.DS_Store', 'minstagram.json','minstagram.txt'];
-$all_files = scandir( $path );
-$all_image_files = array_diff($all_files,$xfiles);
-$num_image_files = count($all_image_files);
-$next_file_name = $num_image_files + 1;
-
-echo ( json_encode( $all_files ) );
-echo '<br>';
-print_r( $all_image_files );
-echo '<br>';
-echo( 'Next File Name =' . $next_file_name );
-*/
-
-
-
-
-
-//
 
