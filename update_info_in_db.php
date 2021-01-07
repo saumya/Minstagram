@@ -46,10 +46,10 @@ $run_the_self_executing_application = (function(){
         try {
             $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
             $sql_statement = "CREATE TABLE IF NOT EXISTS minstagram (
-                                                    id INTEGER PRIMARY KEY,
-                                                    title TEXT,
-                                                    photo BLOB,
-                                                    photo_name TEXT )";
+                                                            id INTEGER PRIMARY KEY,
+                                                            title TEXT,
+                                                            photo BLOB,
+                                                            photo_name TEXT )";
             $pdo->exec($sql_statement);
         } catch (PDOException $e) {
             echo 'Exception : Create Table';
