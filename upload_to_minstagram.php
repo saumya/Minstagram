@@ -51,7 +51,6 @@
 		$write_json_file = function(){
 			$photo_dir = 'minstagram_uploads/';
 			$allPhotos = [];
-			$fileToWrite = "minstagram_uploads/minstagram.json";
 			//
 			$files = scandir( $photo_dir , 0 );
 			for($i = 0; $i < count($files); $i++){
@@ -61,21 +60,22 @@
 					array_push( $allPhotos, $file );
 				}
 			}
-			$resultString = json_encode( $allPhotos );
+			//$resultString = json_encode( $allPhotos );
 			//echo $resultString;
 			$jsonString = '';
 			$jString = '';
 			$count = 0;
-			foreach( $resultString as $key=>$fileObj ){
+			foreach( $allPhotos as $key=>$fileObj ){
 				$count++;
-				if( count($this->dataToWrite) == $count ){
+				if( count($allPhotos) == $count ){
 					$jString .= '{"file":"' . $fileObj . '"}';
 				}else{
 					$jString .= '{"file":"' . $fileObj . '"},';
 				}
 			}
 			$jsonString = '[' . $jString . ']' ;
-			//
+			// Write to the fiel
+			$fileToWrite = "minstagram_uploads/minstagram.json";
 			$file_open_handle = fopen( $fileToWrite, 'w' );
 			fwrite( $file_open_handle, $jsonString );
 			fclose( $file_open_handle );
@@ -109,7 +109,7 @@
 					$file_ext = strtolower(end(explode('.', $_FILES['files']['name'][$i])));
 					
 					$file = $path . $file_name;
-					$file_name_in_server = $path . ( $numFiles = getImageFolderDetails()+1 ) . '.' . $file_ext;
+					$file_name_in_server = $path . ( $numFiles = $getImageFolderDetails()+1 ) . '.' . $file_ext;
 					
 					if (!in_array($file_ext, $extensions)) {
 						$errors[] = 'Extension not allowed: FullName=' . $file_name . ' extension=' . $file_ext . ' type=' . $file_type;
