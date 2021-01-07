@@ -2,7 +2,7 @@
 // Setting the Server Time Zone
 date_default_timezone_set('Asia/Kolkata');
 //
-(function(){
+$app_function = (function(){
 	//
 	// Database services
 	$db_connect = function(){
@@ -140,7 +140,9 @@ date_default_timezone_set('Asia/Kolkata');
 		echo '---------------------------' . '<br />';
 
 	} // if/
-
-	
-})();
+});
+// =================================================
+// Execute the function
+$app_function();
+// =================================================
 
