@@ -1,9 +1,6 @@
 <?php 
 	// Setting the Server Time Zone
 	date_default_timezone_set('Asia/Kolkata');
-
-	require_once('view.photos.php');
-	require_once('writefile.class.php');
 	//
 	(function(){
 		//
@@ -52,11 +49,37 @@
 		};
 
 		$write_json_file = function(){
-			$viewPhotos = new ViewPhotos();
-			//Writing to a JSON file
-			$writeFileObj = new WriteFile( $viewPhotos->getAllPhotos() );
-			$writeFileObj->writeToFile();
-		};
+			$photo_dir = 'minstagram_uploads/';
+			$allPhotos = [];
+			$fileToWrite = "minstagram_uploads/minstagram.json";
+			//
+			$files = scandir( $photo_dir , 0 );
+			for($i = 0; $i < count($files); $i++){
+				$file = $files[$i];
+				$extension = pathinfo($file,PATHINFO_EXTENSION);
+				if( $extension == 'jpg' ){
+					array_push( $allPhotos, $file );
+				}
+			}
+			$resultString = json_encode( $allPhotos );
+			//echo $resultString;
+			$jsonString = '';
+			$jString = '';
+			$count = 0;
+			foreach( $resultString as $key=>$fileObj ){
+				$count++;
+				if( count($this->dataToWrite) == $count ){
+					$jString .= '{"file":"' . $fileObj . '"}';
+				}else{
+					$jString .= '{"file":"' . $fileObj . '"},';
+				}
+			}
+			$jsonString = '[' . $jString . ']' ;
+			//
+			$file_open_handle = fopen( $fileToWrite, 'w' );
+			fwrite( $file_open_handle, $jsonString );
+			fclose( $file_open_handle );
+		}; // write_json_file/
 		// Utility
 		$getImageFolderDetails = function(){
 			// Image files count
@@ -105,10 +128,8 @@
 
 				}// for
 
-				//echo json_encode($aResult);
-				
-				writeTheResultForFrontEnd($aResult); 
-				write_json_file();
+				$writeTheResultForFrontEnd($aResult); 
+				$write_json_file();
 
 				if ($errors) print_r($errors);
 
