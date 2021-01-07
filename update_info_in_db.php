@@ -6,7 +6,8 @@
 
 
 $run_the_self_executing_application = (function(){
-    $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+    //$SQLite_file_path = 'minstagram_uploads/phpsqlite_1.db';
+    $SQLite_file_path = 'phpsqlite.db';
     $get_ui_data = function(){
         // ref: https://www.php.net/manual/en/wrappers.php.php
         $str_json = file_get_contents('php://input');
@@ -41,8 +42,9 @@ $run_the_self_executing_application = (function(){
         return $update_statement->rowCount();
     }; // $set_title_for_the_photo_with_id/
 
-    $initDBTable = function(){
+    $initDBTable = function($PATH_TO_SQLITE_FILE){
         //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+        
         try {
             $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
             $sql_statement = "CREATE TABLE IF NOT EXISTS minstagram (
@@ -55,7 +57,8 @@ $run_the_self_executing_application = (function(){
             echo 'Exception : Create Table';
             echo $e->getMessage();
         }
-    };
+        
+    };// initDBTable/
 
     $savePhoto = function($f_name, $file_data_to_store){
         //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
@@ -65,7 +68,7 @@ $run_the_self_executing_application = (function(){
         $stmt->bindParam(':p_name', $f_name);
         $stmt->bindParam(':p_data', $file_data_to_store, \PDO::PARAM_LOB);
         $stmt->execute();
-    };
+    };// savePhoto/
     
     // Database/
     //
@@ -79,12 +82,12 @@ $run_the_self_executing_application = (function(){
         $num_image_files = count($all_image_files);
         $next_file_name = $num_image_files + 1;
         return $next_file_name;
-    };
+    };// create_file_name/
     // 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ( isset($_POST) ){
             
-            $initDBTable();
+            $initDBTable( $SQLite_file_path );
             echo 'done';
             /*
             $photo_id = ($create_file_name()-1);
