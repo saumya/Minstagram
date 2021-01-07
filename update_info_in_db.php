@@ -25,18 +25,6 @@ $run_the_self_executing_application = (function(){
         //$result = $sth->fetchAll( PDO::FETCH_ASSOC );
         $result = $sth->fetchAll();
         $total_num_rows = count($result);
-        /*
-        for ($i = 0; $i < count($result); $i++)  {
-            $row = $result[$i];
-            //echo $row['id'] . ' | ' . $row['title'] . ' | ' . $row['photo_name'] . ' | ' . $row['photo'] .'<br/>';
-            echo ' \n ';
-            echo 'id=' . $row['id'] . ' | title=' . $row['title'] . ' | name=' . $row['photo_name'];
-            echo ' \n ';
-        }
-        echo 'TotalNumber='. count($result);
-        */
-        //
-        //echo 'get_last_id';
         return $total_num_rows;
     }; // $get_last_id/
     
