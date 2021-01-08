@@ -5,11 +5,14 @@ date_default_timezone_set('Asia/Kolkata');
 $app_function = (function(){
 	//
 	// Database services
+	//
+	/*
 	$db_connect = function(){
 		$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
 		$pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
 		return $pdo;
 	};
+	*/
 
 	// Create a Database and Initilise Table for the first time
     // If not present, make it
