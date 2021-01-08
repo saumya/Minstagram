@@ -1,0 +1,7 @@
+#
+composer_2.0.7.phar
+#
+minstagram_uploads/
+/vendor/
+#
+phpsqlite.db
