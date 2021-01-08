@@ -2,7 +2,7 @@ Minstagram
 ==================
 A simple Image Sharing Application.
 
-> While Deploying, make a folder named `minstagram_uploads` in the root folder.
+    While Deploying, make a folder named `minstagram_uploads` in the root folder.
 
 ### Version 1.0.0
 
