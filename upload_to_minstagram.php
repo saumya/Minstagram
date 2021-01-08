@@ -11,7 +11,11 @@ $app_function = (function(){
 		return $pdo;
 	};
 	$save_photo_in_db = function($f_name, $file_data_to_store){
-		$pdo = $db_connect();
+		//$pdo = $db_connect();
+		//
+		$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+		$pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
+		//
 		$sql = "INSERT INTO minstagram(photo_name, photo)" . "VALUES(:p_name, :p_data)";
 		$stmt = $pdo->prepare($sql);
 		try {
@@ -115,7 +119,7 @@ $app_function = (function(){
 				}// if
 				if (empty($errors)) {
 					// Database and putting the file in the database
-					//save_photo_in_db( $file_name, file_get_contents( $file_tmp ) );
+					$save_photo_in_db( $file_name, file_get_contents( $file_tmp ) );
 
 					// Move the file to desired location
 					$result = move_uploaded_file($file_tmp, $file_name_in_server); // Renaming the uploaded file in server
