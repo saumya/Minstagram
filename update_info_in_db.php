@@ -30,7 +30,7 @@ $run_the_self_executing_application = (function(){
     }; // $get_last_id/
     
     $set_title_for_the_photo_with_id = function( $photo_id, $photo_title ){
-        echo '$set_title_for_the_photo_with_id' . '-'. $photo_id . '-'. $photo_title . '----';
+        //echo '$set_title_for_the_photo_with_id' . '-'. $photo_id . '-'. $photo_title . '----';
         $data = [
             'photo_id'=>$photo_id,
             'photo_title'=>$photo_title
@@ -42,9 +42,15 @@ $run_the_self_executing_application = (function(){
         $update_statement->execute($data);
         return $update_statement->rowCount();
     }; // $set_title_for_the_photo_with_id/
-
-    $initDBTable = function($PATH_TO_SQLITE_FILE){
-        //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+    
+    /*
+    // Moved to the other file
+    // While uploading the image, check and create the Database 
+    //
+    // Create a Database and Initilise Table for the first time
+    // If not present, make it
+    $initDBTable = function(){
+        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
         
         try {
             $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
@@ -60,6 +66,7 @@ $run_the_self_executing_application = (function(){
         }
         
     };// initDBTable/
+    */
 
     $savePhoto = function($f_name, $file_data_to_store){
         //$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
@@ -87,18 +94,14 @@ $run_the_self_executing_application = (function(){
     // 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ( isset($_POST) ){
-            $initDBTable( $SQLite_file_path );
-
+            // Create SQLite Database if not present
+            // $initDBTable();
+            // Get Data from UI/User
             $photo_id = ($create_file_name()-1);
             $photo_title = $get_ui_data();
-            // TODO: Fix this
-            // It is not working, because there is a problem before hand
-            // The Database is not getting updated with the photo information
-            // So we can not update it here now.
+            // Update Database
             $result = $set_title_for_the_photo_with_id($photo_id, $photo_title);
-            
-            echo $photo_id.'-'.$photo_title.'<br/> ';
-
+            // Output for Frontend
             if($result==0){
                 echo 'Title Update Failed!';
             }else{

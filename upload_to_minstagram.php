@@ -10,6 +10,27 @@ $app_function = (function(){
 		$pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
 		return $pdo;
 	};
+
+	// Create a Database and Initilise Table for the first time
+    // If not present, make it
+    $initDBTable = function(){
+        $PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+        
+        try {
+            $pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
+            $sql_statement = "CREATE TABLE IF NOT EXISTS minstagram (
+                                                            id INTEGER PRIMARY KEY,
+                                                            title TEXT,
+                                                            photo BLOB,
+                                                            photo_name TEXT )";
+            $pdo->exec($sql_statement);
+        } catch (PDOException $e) {
+            echo 'Exception : Create Table';
+            echo $e->getMessage();
+        }
+        
+	};// initDBTable/
+	
 	$save_photo_in_db = function($f_name, $file_data_to_store){
 		//$pdo = $db_connect();
 		//
@@ -29,7 +50,11 @@ $app_function = (function(){
 	};
 	$get_last_id = function(){
 		// ref: https://www.php.net/manual/en/pdostatement.fetch.php
-		$pdo = $db_connect();
+		//$pdo = $db_connect();
+		
+		$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
+		$pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
+
 		$sql = "SELECT * FROM minstagram";
 		$result = $pdo->query( $sql );
 		
@@ -118,9 +143,12 @@ $app_function = (function(){
 					$errors[] = 'File size exceeds limit: FullName=' . $file_name . ' extension=' . $file_ext . ' type=' . $file_type;
 				}// if
 				if (empty($errors)) {
+					// Before Saving the File in Database, 
+					// check if Database is present or not
+					// If not, create the DB.
+					$initDBTable();
 					// Database and putting the file in the database
 					$save_photo_in_db( $file_name, file_get_contents( $file_tmp ) );
-
 					// Move the file to desired location
 					$result = move_uploaded_file($file_tmp, $file_name_in_server); // Renaming the uploaded file in server
 					array_push( $aResult, $result);
