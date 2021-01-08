@@ -29,8 +29,8 @@ $run_the_self_executing_application = (function(){
         return $total_num_rows;
     }; // $get_last_id/
     
-    $set_title_for_the_photo_with_id = function( $photo_id, $photo_title){
-        
+    $set_title_for_the_photo_with_id = function( $photo_id, $photo_title ){
+        echo '$set_title_for_the_photo_with_id' . '-'. $photo_id . '-'. $photo_title . '----';
         $data = [
             'photo_id'=>$photo_id,
             'photo_title'=>$photo_title
@@ -92,6 +92,9 @@ $run_the_self_executing_application = (function(){
             $photo_id = ($create_file_name()-1);
             $photo_title = $get_ui_data();
             // TODO: Fix this
+            // It is not working, because there is a problem before hand
+            // The Database is not getting updated with the photo information
+            // So we can not update it here now.
             $result = $set_title_for_the_photo_with_id($photo_id, $photo_title);
             
             echo $photo_id.'-'.$photo_title.'<br/> ';
