@@ -112,7 +112,7 @@ $app_function = (function(){
 	$getImageFolderDetails = function(){
 		// Image files count
 		$files = scandir('minstagram_uploads/');
-		$files_only = array_diff( $files, array('..', '.', '.DS_Store', 'minstagram.json', 'minstagram.txt') );
+		$files_only = array_diff( $files, array('..', '.', '.DS_Store', 'minstagram.json', 'minstagram_db.json', 'minstagram.txt') );
 		$num_images_on_this_folder = count($files_only);
 		return $num_images_on_this_folder;
 	};
