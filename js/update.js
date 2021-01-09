@@ -1,8 +1,8 @@
 //
-// version: 1.0.0
+// version: 1.1.0
 //
 // self executing function
-(function(message){
+(function(msg){
     //
     const btnUpdate = document.getElementById('id_btn_update');
     const txtUpdate = document.getElementById('id_txt_update');
@@ -79,6 +79,6 @@
         } ).catch( error1=> console.log(error1) );
     });
     
-    console.log('update.js : ' + message);
+    console.log('update.js', msg);
 })('1.1.0');
 // self executing function/

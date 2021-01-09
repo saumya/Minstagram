@@ -1,7 +1,8 @@
-console.log('Upload : Version 1.1.0');
 //
-(()=>{
-  console.log('Application');
+// version: 1.1.0
+//
+((msg)=>{
+  console.log('upload.js', msg);
   // hide the progress bars
   const hideProgressbars = function(){
     const p1 = document.getElementById('progress_1');
@@ -58,7 +59,7 @@ console.log('Upload : Version 1.1.0');
     //console.log('Submit : action button', new Date());
   });
   //
-})();// Self-Executing Function
+})('1.1.0');// Self-Executing Function
 
 
 
