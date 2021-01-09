@@ -1,15 +1,36 @@
-console.log('Upload : Version 1.0.0');
+console.log('Upload : Version 1.1.0');
 
 (()=>{
   console.log('Application');
+  // hide the progress bars
+  const hideProgressbars = function(){
+    const p1 = document.getElementById('progress_1');
+    const p2 = document.getElementById('progress_2');
+    const p3 = document.getElementById('progress_3');
+
+    p1.style.display = 'none';
+    p2.style.display = 'none';
+    p3.style.display = 'none';
+  };
+  const showProgressBarWithId = function(id){
+    const el = document.getElementById(id);
+    el.style.display = '';
+  };
+  const hideProgressBarWithId = function(id){
+    const el = document.getElementById(id);
+    el.style.display = 'none';
+  };
   //
+  hideProgressbars();
   // Define processing URL and form element
   const url = 'upload_to_minstagram.php';
   const form = document.querySelector('form');
   // Listen for form submit
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-
+    //
+    showProgressBarWithId('progress_1');
+    //
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
@@ -30,6 +51,8 @@ console.log('Upload : Version 1.0.0');
       response.text().then( result => {
         //console.log('result');
         //debugger;
+
+        hideProgressbars();
         
         console.log('result', result);
         const a1 = result.substr(1,result.length);
@@ -59,7 +82,7 @@ console.log('Upload : Version 1.0.0');
       //
     }).catch( error1 => console.log(error1) );
     //
-    console.log('Submit : action button', new Date());
+    //console.log('Submit : action button', new Date());
   });
   //
 })();// Self-Executing Function
