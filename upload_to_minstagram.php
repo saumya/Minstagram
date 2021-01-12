@@ -6,13 +6,6 @@ $app_function = (function(){
 	//
 	// Database services
 	//
-	/*
-	$db_connect = function(){
-		$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
-		$pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
-		return $pdo;
-	};
-	*/
 
 	// Create a Database and Initilise Table for the first time
     // If not present, make it
@@ -39,12 +32,17 @@ $app_function = (function(){
 		//
 		$PATH_TO_SQLITE_FILE = 'phpsqlite.db';
 		$pdo = new \PDO( "sqlite:" . $PATH_TO_SQLITE_FILE );
-		//
-		$sql = "INSERT INTO minstagram(photo_name, photo)" . "VALUES(:p_name, :p_data)";
+		
+		// Save Photo BLOB and the name in the Database
+		// $sql = "INSERT INTO minstagram(photo_name, photo)" . "VALUES(:p_name, :p_data)";
+		
+		// Save the Name only, instead of the 'BLOB' photo Data
+		$sql = "INSERT INTO minstagram(photo_name)" . "VALUES(:p_name)";
+		
 		$stmt = $pdo->prepare($sql);
 		try {
 			$stmt->bindParam(':p_name', $f_name);
-			$stmt->bindParam(':p_data', $file_data_to_store, \PDO::PARAM_LOB);
+			//$stmt->bindParam(':p_data', $file_data_to_store, \PDO::PARAM_LOB);
 			$stmt->execute();
 		} catch (PDOException $e) {
 			echo $e->getMessage();
