@@ -24,6 +24,8 @@ Just drop in this folder wherever the deployment is needed.
 
  - [] Settings Pannel
  - [] Admin UI
+  - [] Removing Photos
+  - [] Editing Caption
  - [] Comment from Viewer
  - [] Likes from Viewer
  - [] Support of more file types
