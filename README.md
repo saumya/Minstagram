@@ -2,6 +2,8 @@ Minstagram
 ==================
 A simple Image Sharing Application.
 
+### Deployment 
+
 Just drop in this folder wherever the deployment is needed.
 
  - No need for any special setup for Database.
