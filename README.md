@@ -1,6 +1,8 @@
 Minstagram
 ==================
-A simple Image Sharing Application.
+ 
+ Image sharing application for individuals.
+
 
 ### Deployment 
 
