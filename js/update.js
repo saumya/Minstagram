@@ -2,6 +2,8 @@
 // version: 1.1.0
 //
 // self executing function
+// (function(){})();
+//
 (function(msg){
     //
     const btnUpdate = document.getElementById('id_btn_update');
